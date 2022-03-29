@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Xamarin.Forms.DataGrid" Version="4.8.0" />
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Syncfusion.Xamarin.SfDataGrid" />
+    <None Remove="Core\" />
+    <None Remove="Extensions\" />
+    <None Remove="Xamarin.Forms.DataGrid" />
+    <None Remove="Repositories\" />
+    <None Remove="Xam.Plugin.SimpleAudioPlayer" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+</Project>

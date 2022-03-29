@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"  
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:root="clr-namespace:UCSEditor"
+             xmlns:core="clr-namespace:UCSEditor.Core"
+             xmlns:ext="clr-namespace:UCSEditor.Extensions"
+             x:Class="UCSEditor.Core.UCSView"
+             BackgroundColor="#061D24">
+    
+    <ContentPage.BindingContext>
+        <core:UCSViewModel/>
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+
+        <!--#region Title -->
+        <Frame BackgroundColor="#061D24"
+               Padding="12"
+               Margin="10"
+               CornerRadius="0">
+            <Label Text="UCS Editor"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White"
+                   FontSize="Title"/>
+        </Frame>
+        <!--#endregion-->
+
+        <!--#region Data Grid #BAD0D5 -->
+        <dg:DataGrid x:Name="dataGrid"
+                     ItemsSource="{Binding UCSEntries}"
+                     SelectionEnabled="True"
+                     SelectedItem="{Binding SelectedUCSEntry}"
+                     ItemSelected="DataGrid_ItemSelected"
+                     RowHeight="25"
+                     HeaderHeight="25"
+                     HeaderTextColor="White"
+                     HeaderBackground="#384D4C"
+                     BorderThickness="1,0,1,0"
+                     BorderColor="Black"
+                     ActiveRowColor="#AFD2DA"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand"
+                     Refreshing="DataGrid_Refreshing"
+                     HeaderFontSize="15"
+                     HeaderBordersVisible="True"
+                     Padding="5">
+
+            <x:Arguments>
+                <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+            </x:Arguments>
+
+            <!-- Headers -->
+            <dg:DataGrid.Columns>
+                <dg:DataGridColumn Title="CAT ID"
+                                   PropertyName="Category"
+                                   HorizontalContentAlignment="FillAndExpand"/>
+                <dg:DataGridColumn Title="FX Name"
+                                   PropertyName="Name"
+                                   HorizontalContentAlignment="FillAndExpand"/>
+                <dg:DataGridColumn Title="Creator ID"
+                                   PropertyName="Creator"
+                                   HorizontalContentAlignment="FillAndExpand"/>
+                <dg:DataGridColumn Title="Source ID"
+                                   PropertyName="Source"
+                                   HorizontalContentAlignment="FillAndExpand"/>
+                <dg:DataGridColumn Title="User Data (Optional)"
+                                   PropertyName="UserData"
+                                   HorizontalContentAlignment="FillAndExpand"/>
+            </dg:DataGrid.Columns>
+
+            <!-- Style -->
+            <dg:DataGrid.RowsBackgroundColorPalette>  
+                <dg:PaletteCollection>  
+                    <Color>#DFDFE1</Color>  
+                    <Color>#CAD4D6</Color>  
+                </dg:PaletteCollection>
+            </dg:DataGrid.RowsBackgroundColorPalette> 
+
+        </dg:DataGrid>
+        <!--#endregion-->
+
+        <!--#region Options and Settings -->
+        <Grid Padding="10,0,10,5">
+
+            <!-- Definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="columnFileInfo"/>
+                <ColumnDefinition x:Name="columnAutofix"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+
+            <!--#region File Info -->
+            <Frame BackgroundColor="#416165"
+                   Padding="10"
+                   CornerRadius="2"
+                   Grid.Column="0"
+                   Grid.Row="0">
+                <Label Text="File Info"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White"
+                       FontSize="Large"/>
+            </Frame>
+
+            <!-- UCS Entry Information -->
+            <Picker x:Name="pickerCategory"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    ItemsSource="{Binding UCSCategories}"
+                    SelectedItem="{Binding SelectedUCSEntry.Category, Mode=Default}"
+                    FontSize="Medium"
+                    HeightRequest="25"
+                    BackgroundColor="#1A4350"
+                    TabIndex="1"
+                    IsTabStop="True"/>
+            <Entry Text="{Binding SelectedUCSEntry.Name}"
+                   Grid.Column="0"
+                   Grid.Row="2"
+                   FontSize="Medium"
+                   HeightRequest="25"
+                   BackgroundColor="#1A4350"
+                   TabIndex="2"
+                   IsTabStop="True"/>
+            <Entry Text="{Binding SelectedUCSEntry.Creator}"
+                   Grid.Column="0"
+                   Grid.Row="3"
+                   FontSize="Medium"
+                   HeightRequest="25"
+                   BackgroundColor="#1A4350"
+                   TabIndex="3"
+                   IsTabStop="True"/>
+            <Entry Text="{Binding SelectedUCSEntry.Source}"
+                   Grid.Column="0"
+                   Grid.Row="4"
+                   FontSize="Medium"
+                   HeightRequest="25"
+                   BackgroundColor="#1A4350"
+                   TabIndex="4"
+                   IsTabStop="True"/>
+            <Entry Text="{Binding SelectedUCSEntry.UserData}"
+                   Grid.Column="0"
+                   Grid.Row="5"
+                   FontSize="Medium"
+                   HeightRequest="25"
+                   BackgroundColor="#1A4350"
+                   TabIndex="5"
+                   IsTabStop="True"/>
+            <!--#endregion-->
+
+            <!--#region Autofix / Batch Rename-->
+            <Frame BackgroundColor="#416165"
+                   Padding="10"
+                   CornerRadius="2"
+                   Grid.Column="1"
+                   Grid.Row="0">
+                <Label Text="Batch Rename"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White"
+                       FontSize="Large"/>
+            </Frame>
+
+            <!-- Search String -->
+            <StackLayout Grid.Column="1"
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"
+                         Orientation="Horizontal">
+                <Label Text="Search for" WidthRequest="95"/>
+                <Entry x:Name="entrySearch"
+                       Placeholder="*"
+                       BackgroundColor="#1A4350"
+                       HorizontalOptions="FillAndExpand"
+                       TabIndex="6"/>
+            </StackLayout>
+
+            <!-- Replacement String -->
+            <StackLayout Grid.Column="1"
+                         Grid.Row="2"
+                         HorizontalOptions="FillAndExpand"
+                         Orientation="Horizontal">
+                <Label Text="Replace with" WidthRequest="95"/>
+                <Entry x:Name="entryReplacement"
+                       BackgroundColor="#1A4350"
+                       HorizontalOptions="FillAndExpand"
+                       TabIndex="7"/>
+            </StackLayout>
+
+            <!-- UCS Token -->
+            <StackLayout Grid.Column="1"
+                         Grid.Row="3"
+                         HorizontalOptions="FillAndExpand"
+                         Orientation="Horizontal">
+                <Label Text="In token" WidthRequest="95"/>
+                <Picker x:Name="pickerToken"
+                        ItemsSource="{Binding UCSTokens}"
+                        BackgroundColor="#1A4350"
+                        HorizontalOptions="FillAndExpand"
+                        TabIndex="7"/>
+            </StackLayout>
+
+            <!-- Warning! -->
+            <Label Text="Running the autofix does not auto-commit."
+                   Grid.Column="1"
+                   Grid.Row="4"
+                   Grid.RowSpan="2"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"/>
+            <!--#endregion-->
+
+        </Grid>
+        <!--#endregion-->
+
+        <!--#region Commands-->
+        <StackLayout FlowDirection="LeftToRight"
+                     HorizontalOptions="FillAndExpand"
+                     Orientation="Horizontal"
+                     Padding="10,0,10,0"
+                     Margin="20,0,20,10">
+
+            <Button x:Name="buttonPlaySound"
+                    Text="Play Sound"
+                    HeightRequest="25"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="#D0CDD7"
+                    TextColor="Black"
+                    Clicked="ButtonPlaySound_Clicked"
+                    IsTabStop="True"
+                    TabIndex="10"/>
+
+             <Button x:Name="buttonStopSound"
+                    Text="Stop Sound"
+                    HeightRequest="25"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="#D0CDD7"
+                    TextColor="Black"
+                    Clicked="ButtonStopSound_Clicked"
+                    IsTabStop="True"
+                    TabIndex="10"/>
+
+            <Button x:Name="buttonBrowse"
+                    Text="Select Files"
+                    HeightRequest="25"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="#D0CDD7"
+                    TextColor="Black"
+                    Clicked="ButtonBrowse_Clicked"
+                    IsTabStop="True"
+                    TabIndex="8"/>
+
+            <Button x:Name="buttonAutofix"
+                    Text="Run Autofix"
+                    HeightRequest="25"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="#D0CDD7"
+                    TextColor="Black"
+                    Clicked="ButtonAutofix_Clicked"
+                    IsTabStop="True"
+                    TabIndex="9"/>
+
+            <Button x:Name="buttonCommit"
+                    Text="Commit Changes"
+                    HeightRequest="25"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="#D0CDD7"
+                    TextColor="Black"
+                    Clicked="ButtonCommit_Clicked"
+                    IsTabStop="True"
+                    TabIndex="10"/>
+
+        </StackLayout>
+        <!--#endregion-->
+
+        <!--#region Log-->
+        <Label Text="{Binding TempLog}"
+               BackgroundColor="#D0CDD7"
+               FontSize="Micro"
+               Padding="5"
+               TextColor="Black"/>
+        <!--#endregion-->
+
+    </StackLayout>
+
+</ContentPage>

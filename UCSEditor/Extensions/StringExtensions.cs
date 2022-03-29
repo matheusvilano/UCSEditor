@@ -1,4 +1,4 @@
-﻿namespace NamingConventionUtilities
+﻿namespace UCSEditor.Extensions
 {
     internal static class StringExtensions
     {
@@ -6,7 +6,7 @@
         {
             foreach (char character in chars)
             {
-                if (!Char.IsLetter(character))
+                if (!char.IsLetter(character))
                 {
                     chars.Replace($"{character}", "");
                 }
@@ -18,7 +18,7 @@
         {
             foreach (char character in chars)
             {
-                if (!Char.IsLetterOrDigit(character))
+                if (!char.IsLetterOrDigit(character))
                 {
                     chars.Replace($"{character}", "");
                 }
@@ -30,7 +30,7 @@
         {
             foreach (char character in chars)
             {
-                if (!Char.IsLetterOrDigit(character))
+                if (!char.IsLetterOrDigit(character))
                 {
                     chars.Replace(character, replacement);
                 }
