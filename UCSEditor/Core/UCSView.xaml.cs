@@ -185,12 +185,16 @@ namespace UCSEditor.Core
             }
         }
 
-        int tempCount = 0;
+        /// <summary>
+        /// Called whenever the data grid is refreshing itself.
+        /// </summary>
+        /// <param name="sender">The caller.</param>
+        /// <param name="e">The event arguments.</param>
         private void DataGrid_Refreshing(System.Object sender, System.EventArgs e)
         {
             if (ucsViewModel != null)
             {
-                ucsViewModel.TempLog = $"{nameof(DataGrid_Refreshing)} | {++tempCount}";
+                // TODO: log refresh command information.
             }
         }
     }
