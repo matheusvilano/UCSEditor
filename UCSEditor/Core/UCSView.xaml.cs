@@ -12,6 +12,9 @@ using System.IO;
 
 namespace UCSEditor.Core
 {
+    /// <summary>
+    /// The UCS View.
+    /// </summary>
     public partial class UCSView : ContentPage
     {
         /// <summary>
