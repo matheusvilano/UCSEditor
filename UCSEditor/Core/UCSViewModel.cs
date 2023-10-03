@@ -4,6 +4,9 @@ using UCSEditor.Extensions;
 
 namespace UCSEditor.Core
 {
+    /// <summary>
+    /// The UCS ViewModel.
+    /// </summary>
     public class UCSViewModel : INotifyPropertyChanged
     {
         /// <summary>
