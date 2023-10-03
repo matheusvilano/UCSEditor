@@ -8,7 +8,7 @@
         /// <summary>
         /// Gets the last valid index in the string array.
         /// </summary>
-        /// <param name="str">The caller object, which is an instance of the `string` class.</param>
+        /// <param name="str">The caller object, which is an instance of the `string[]` type.</param>
         /// <returns>The last valid index.</returns>
         public static int GetLastIndex(this string[] str)
         {
@@ -18,7 +18,7 @@
         /// <summary>
         /// Gets the last valid object in the string array.
         /// </summary>
-        /// <param name="str">The caller object, which is an instance of the `string` class.</param>
+        /// <param name="str">The caller object, which is an instance of the `string[]` type.</param>
         /// <returns>The last valid object.</returns>
         public static string GetLastObject(this string[] str)
         {
